@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Tutorial de comandos del servidor Survival CempaiCraft. Aprende todos los comandos: básicos, economía, construcción y más." />
-  <title>Tutorial de Comandos | CempaiCraft</title>
+  <title>Tutorial | CempaiCraft</title>
+  <link rel="icon" type="image/png" href="../assets/img/Logo.png" />
   <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/animations.css" />
@@ -45,194 +46,268 @@
   <main class="container">
     <div class="commands-grid stagger" id="commands-container">
 
-      <!-- CATEGORÍA: Básicos -->
+      <!-- CATEGORÍA: Lobby -->
       <div class="command-category reveal">
-        <div class="command-category__header" id="cat-basicos-header" aria-controls="cat-basicos-body" role="button" tabindex="0">
-          <div class="command-category__icon"><i class="fa-solid fa-gamepad"></i></div>
-          <h3>Comandos Básicos</h3>
-          <span class="command-category__count">8 comandos</span>
-          <button class="command-category__toggle" id="toggle-basicos" aria-label="Expandir básicos">
+        <div class="command-category__header" id="cat-lobby-header" aria-controls="cat-lobby-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-house-chimney-window"></i></div>
+          <h3>1. Lobby</h3>
+          <span class="command-category__count">1 comando</span>
+          <button class="command-category__toggle" id="toggle-lobby" aria-label="Expandir Lobby">
             <i class="fa-solid fa-chevron-down"></i>
           </button>
         </div>
-        <div class="command-category__body" id="cat-basicos-body">
+        <div class="command-category__body" id="cat-lobby-body">
           <div class="command-list">
-            <div class="command-item" id="cmd-spawn">
+            <div class="command-item" id="cmd-lobby">
               <div>
-                <div class="command-item__code">/spawn</div>
-                <div class="command-item__desc">Teleportarte al punto de spawn principal del servidor.</div>
+                <div class="command-item__code">/lobby</div>
+                <div class="command-item__desc">Volver al lobby principal. Funciona desde cualquier mundo o dimensión en la que estés.</div>
               </div>
-              <button class="command-item__copy" aria-label="Copiar comando spawn">Copiar</button>
+              <button class="command-item__copy" aria-label="Copiar comando lobby">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA: Homes -->
+      <div class="command-category reveal">
+        <div class="command-category__header" id="cat-homes-header" aria-controls="cat-homes-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-location-dot"></i></div>
+          <h3>2. Homes (puntos de guardado)</h3>
+          <span class="command-category__count">4 comandos</span>
+          <button class="command-category__toggle" id="toggle-homes" aria-label="Expandir Homes">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="command-category__body" id="cat-homes-body">
+          <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
+            Un home es un punto que vos mismo guardás para volver a él cuando quieras. Podés tener hasta 20 homes distintos, cada uno con su propio nombre.
+          </p>
+          <div class="command-list">
+            <div class="command-item" id="cmd-sethome">
+              <div>
+                <div class="command-item__code">/sethome &lt;nombre&gt;</div>
+                <div class="command-item__desc">Guardar un home en tu posición actual (ej: /sethome casa). Sin nombre crea un home por defecto.</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
             </div>
             <div class="command-item" id="cmd-home">
               <div>
-                <div class="command-item__code">/home</div>
-                <div class="command-item__desc">Teleportarte a tu hogar establecido.</div>
+                <div class="command-item__code">/home &lt;nombre&gt;</div>
+                <div class="command-item__desc">Ir a un punto guardado (ej: /home casa).</div>
               </div>
-              <button class="command-item__copy" aria-label="Copiar comando home">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-sethome">
-              <div>
-                <div class="command-item__code">/sethome</div>
-                <div class="command-item__desc">Establecer tu punto de hogar en la ubicación actual.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando sethome">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-tpa">
-              <div>
-                <div class="command-item__code">/tpa [jugador]</div>
-                <div class="command-item__desc">Solicitar teleportación a la ubicación de otro jugador.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando tpa">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-tpaccept">
-              <div>
-                <div class="command-item__code">/tpaccept</div>
-                <div class="command-item__desc">Aceptar una solicitud de teleportación de otro jugador.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando tpaccept">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-back">
-              <div>
-                <div class="command-item__code">/back</div>
-                <div class="command-item__desc">Volver a tu última ubicación antes de teleportarte.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando back">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-msg">
-              <div>
-                <div class="command-item__code">/msg [jugador] [mensaje]</div>
-                <div class="command-item__desc">Enviar un mensaje privado a otro jugador.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando msg">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-helpme">
-              <div>
-                <div class="command-item__code">/helpme [texto]</div>
-                <div class="command-item__desc">Solicitar ayuda al staff del servidor.</div>
-              </div>
-              <button class="command-item__copy" aria-label="Copiar comando helpme">Copiar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CATEGORÍA: Economía -->
-      <div class="command-category reveal">
-        <div class="command-category__header" id="cat-eco-header" aria-controls="cat-eco-body" role="button" tabindex="0">
-          <div class="command-category__icon"><i class="fa-solid fa-coins"></i></div>
-          <h3>Economía y Dinero</h3>
-          <span class="command-category__count">6 comandos</span>
-          <button class="command-category__toggle" id="toggle-eco" aria-label="Expandir economía">
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-        </div>
-        <div class="command-category__body" id="cat-eco-body">
-          <div class="command-list">
-            <div class="command-item" id="cmd-balance">
-              <div>
-                <div class="command-item__code">/balance</div>
-                <div class="command-item__desc">Ver tu saldo actual de monedas del servidor.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-pay">
-              <div>
-                <div class="command-item__code">/pay [jugador] [cantidad]</div>
-                <div class="command-item__desc">Transferir monedas a otro jugador.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-baltop">
-              <div>
-                <div class="command-item__code">/baltop</div>
-                <div class="command-item__desc">Ver el ranking de los jugadores más ricos del servidor.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-shop">
-              <div>
-                <div class="command-item__code">/shop</div>
-                <div class="command-item__desc">Abrir la tienda del servidor para comprar y vender items.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-sell">
-              <div>
-                <div class="command-item__code">/sell hand</div>
-                <div class="command-item__desc">Vender el item que tienes en la mano.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-auction">
-              <div>
-                <div class="command-item__code">/auction [precio]</div>
-                <div class="command-item__desc">Subastar el item en mano en el chat global.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CATEGORÍA: Survival y Mundo -->
-      <div class="command-category reveal" id="cat-survival">
-        <div class="command-category__header" id="cat-survival-header" aria-controls="cat-survival-body" role="button" tabindex="0">
-          <div class="command-category__icon"><i class="fa-solid fa-pickaxe"></i></div>
-          <h3>Survival y Mundo</h3>
-          <span class="command-category__count">7 comandos</span>
-          <button class="command-category__toggle" id="toggle-survival" aria-label="Expandir Survival">
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-        </div>
-        <div class="command-category__body" id="cat-survival-body">
-          <div class="command-list">
-            <div class="command-item" id="cmd-rtp">
-              <div>
-                <div class="command-item__code">/rtp</div>
-                <div class="command-item__desc">Teleportarte a una ubicación aleatoria en el mapa para explorar.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-kit">
-              <div>
-                <div class="command-item__code">/kit</div>
-                <div class="command-item__desc">Ver los kits disponibles según tu rango en el servidor.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-kit-survival">
-              <div>
-                <div class="command-item__code">/kit survival</div>
-                <div class="command-item__desc">Reclamar el kit de survival básico (disponible una vez por día).</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-sethome-named">
-              <div>
-                <div class="command-item__code">/sethome [nombre]</div>
-                <div class="command-item__desc">Crear un hogar con nombre personalizado para teletransportarte.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
             </div>
             <div class="command-item" id="cmd-homes">
               <div>
                 <div class="command-item__code">/homes</div>
-                <div class="command-item__desc">Listar todos tus hogares establecidos en el servidor.</div>
+                <div class="command-item__desc">Ver todos tus homes guardados.</div>
               </div>
-              <button class="command-item__copy">Copiar</button>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
             </div>
             <div class="command-item" id="cmd-delhome">
               <div>
-                <div class="command-item__code">/delhome [nombre]</div>
-                <div class="command-item__desc">Eliminar un hogar que ya no necesitas.</div>
+                <div class="command-item__code">/delhome &lt;nombre&gt;</div>
+                <div class="command-item__desc">Borrar un punto guardado (ej: /delhome granja).</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA: TPA -->
+      <div class="command-category reveal">
+        <div class="command-category__header" id="cat-tpa-header" aria-controls="cat-tpa-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-people-arrows"></i></div>
+          <h3>3. Teleport a jugadores (TPA)</h3>
+          <span class="command-category__count">4 comandos</span>
+          <button class="command-category__toggle" id="toggle-tpa" aria-label="Expandir TPA">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="command-category__body" id="cat-tpa-body">
+          <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
+            Sistema que le pide permiso al otro jugador antes de teletransportarte a él, así nadie aparece de sorpresa. Las solicitudes expiran solas si nadie responde.
+          </p>
+          <div class="command-list">
+            <div class="command-item" id="cmd-tpa">
+              <div>
+                <div class="command-item__code">/tpa &lt;nombre_del_jugador&gt;</div>
+                <div class="command-item__desc">Pedir teletransportarte a alguien (ej: /tpa TailerMC).</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+            <div class="command-item" id="cmd-tpaccept">
+              <div>
+                <div class="command-item__code">/tpaccept</div>
+                <div class="command-item__desc">Aceptar una solicitud que te llegó.</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+            <div class="command-item" id="cmd-tpdeny">
+              <div>
+                <div class="command-item__code">/tpdeny</div>
+                <div class="command-item__desc">Rechazar una solicitud de teletransporte.</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+            <div class="command-item" id="cmd-tpacancel">
+              <div>
+                <div class="command-item__code">/tpacancel</div>
+                <div class="command-item__desc">Cancelar una solicitud que vos enviaste.</div>
+              </div>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA: Clanes -->
+      <div class="command-category reveal">
+        <div class="command-category__header" id="cat-clanes-header" aria-controls="cat-clanes-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>4. Clanes</h3>
+          <span class="command-category__count">19 comandos</span>
+          <button class="command-category__toggle" id="toggle-clanes" aria-label="Expandir Clanes">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="command-category__body" id="cat-clanes-body">
+          <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
+            Sistema de clanes, puntos y protección de cofres. Los puntos se ganan matando jugadores (+5 normales, +10 clanes enemigos).
+          </p>
+          <div class="command-list">
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan create &lt;nombre&gt;</div>
+                <div class="command-item__desc">Crear tu clan (ej: /clan create LosBetos). Serás automáticamente el líder.</div>
               </div>
               <button class="command-item__copy">Copiar</button>
             </div>
-            <div class="command-item" id="cmd-playtime">
+            <div class="command-item">
               <div>
-                <div class="command-item__code">/playtime</div>
-                <div class="command-item__desc">Ver cuánto tiempo llevas jugando en el servidor.</div>
+                <div class="command-item__code">/clan accept</div>
+                <div class="command-item__desc">Aceptar una invitación de un clan.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan info</div>
+                <div class="command-item__desc">Ver info de tu clan.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan list</div>
+                <div class="command-item__desc">Ver lista de todos los clanes del server.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan home</div>
+                <div class="command-item__desc">Teletransportarte a la base del clan (enfriamiento de 2 mins, demora de 5 segs).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan points</div>
+                <div class="command-item__desc">Ver puntos totales del clan.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan playerpoints</div>
+                <div class="command-item__desc">Ver cuánto aportó cada miembro.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan invite &lt;jugador&gt;</div>
+                <div class="command-item__desc"><b>(Líder)</b> Invitar a alguien al clan.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan kick &lt;jugador&gt;</div>
+                <div class="command-item__desc"><b>(Líder)</b> Expulsar a un miembro.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan prefix &lt;prefix&gt;</div>
+                <div class="command-item__desc"><b>(Líder)</b> Cambiar el prefijo del clan en el chat.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan pvp</div>
+                <div class="command-item__desc"><b>(Líder)</b> Activar/desactivar fuego amigo (PvP entre miembros).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan ally add &lt;owner&gt;</div>
+                <div class="command-item__desc"><b>(Líder)</b> Agregar clan aliado.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan ally remove &lt;owner&gt;</div>
+                <div class="command-item__desc"><b>(Líder)</b> Quitar clan aliado.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan sethome</div>
+                <div class="command-item__desc"><b>(Líder)</b> Guardar tu posición como base del clan.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clan disband</div>
+                <div class="command-item__desc"><b>(Líder)</b> Disolver el clan (irreversible).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clanchest buylock 1</div>
+                <div class="command-item__desc">Compra 1 cupo de protección de cofre (cuesta 250 puntos de clan).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clanchest lock</div>
+                <div class="command-item__desc">Protege el cofre al que estás mirando.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clanchest unlock</div>
+                <div class="command-item__desc">Quita la protección de un cofre.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/clanchest accesslist</div>
+                <div class="command-item__desc">Ver quién tiene acceso a un cofre protegido. (Alias: /cchest, /cch, /cht).</div>
               </div>
               <button class="command-item__copy">Copiar</button>
             </div>
@@ -240,52 +315,24 @@
         </div>
       </div>
 
-      <!-- CATEGORÍA: Construcción y Herramientas -->
+      <!-- CATEGORÍA: Quests -->
       <div class="command-category reveal">
-        <div class="command-category__header" id="cat-build-header" aria-controls="cat-build-body" role="button" tabindex="0">
-          <div class="command-category__icon"><i class="fa-solid fa-hammer"></i></div>
-          <h3>Construcción y Herramientas</h3>
-          <span class="command-category__count">5 comandos</span>
-          <button class="command-category__toggle" id="toggle-build" aria-label="Expandir construcción">
+        <div class="command-category__header" id="cat-quests-header" aria-controls="cat-quests-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-scroll"></i></div>
+          <h3>5. Quests</h3>
+          <span class="command-category__count">1 comando</span>
+          <button class="command-category__toggle" id="toggle-quests" aria-label="Expandir Quests">
             <i class="fa-solid fa-chevron-down"></i>
           </button>
         </div>
-        <div class="command-category__body" id="cat-build-body">
+        <div class="command-category__body" id="cat-quests-body">
           <div class="command-list">
-            <div class="command-item" id="cmd-workbench">
+            <div class="command-item" id="cmd-quest">
               <div>
-                <div class="command-item__code">/workbench</div>
-                <div class="command-item__desc">Abrir una mesa de trabajo portátil desde cualquier lugar.</div>
+                <div class="command-item__code">/quest</div>
+                <div class="command-item__desc">Aceptar o gestionar tus misiones (quests).</div>
               </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-anvil">
-              <div>
-                <div class="command-item__code">/anvil</div>
-                <div class="command-item__desc">Abrir un yunque portátil para reparar y nombrar items.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-enderchest">
-              <div>
-                <div class="command-item__code">/enderchest</div>
-                <div class="command-item__desc">Acceder a tu ender chest personal desde cualquier lugar.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-repair">
-              <div>
-                <div class="command-item__code">/repair</div>
-                <div class="command-item__desc">Reparar el item en mano (disponible para rangos VIP+).</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item" id="cmd-hat">
-              <div>
-                <div class="command-item__code">/hat</div>
-                <div class="command-item__desc">Ponerte el item en mano como casco cosmético.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
+              <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@
       <!-- Logo -->
       <a href="${prefix}index.html" class="navbar__logo" id="nav-logo" aria-label="CempaiCraft inicio">
         <img src="${prefix}assets/img/Logo.png" alt="CempaiCraft" class="navbar__logo-img" />
-        <span class="navbar__logo-text">CempaiCraft</span>
+        <img src="${prefix}assets/img/Word.png" alt="CempaiCraft" class="navbar__logo-word" style="height: 35px; width: auto; object-fit: contain; margin-left: -3px;" />
       </a>
 
       <!-- Links de escritorio -->
@@ -73,7 +73,7 @@
         <div class="footer__brand">
           <div class="footer__logo">
             <img src="${prefix}assets/img/Logo.png" alt="CempaiCraft Logo" class="footer__logo-img" />
-            <span class="footer__logo-text">CempaiCraft</span>
+            <img src="${prefix}assets/img/Word.png" alt="CempaiCraft" class="footer__logo-word" style="height: 30px; width: auto; object-fit: contain; margin-left: -3px;" />
           </div>
           <p class="footer__desc">
             Servidor de Minecraft Survival. Únete a nuestra comunidad, obtén llaves
@@ -90,25 +90,6 @@
               <i class="fa-solid fa-globe"></i>
             </a>
           </div>
-        </div>
-
-        <!-- Navegación -->
-        <div class="footer__col">
-          <h4>Navegación</h4>
-          <ul class="footer__links">
-            <li><a href="${prefix}index.html"            class="footer__link" id="footer-nav-inicio">
-              <i class="fa-solid fa-chevron-right"></i> Inicio
-            </a></li>
-            <li><a href="${prefix}pages/tutorial.html"   class="footer__link" id="footer-nav-tutorial">
-              <i class="fa-solid fa-chevron-right"></i> Tutoriales
-            </a></li>
-            <li><a href="${prefix}pages/micropagos.html" class="footer__link" id="footer-nav-tienda">
-              <i class="fa-solid fa-chevron-right"></i> Tienda
-            </a></li>
-            <li><a href="${prefix}pages/contacto.html"   class="footer__link" id="footer-nav-contacto">
-              <i class="fa-solid fa-chevron-right"></i> Contacto
-            </a></li>
-          </ul>
         </div>
 
         <!-- Servidor -->
@@ -153,6 +134,11 @@
       </div>
     </div>
   </footer>
+  
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
   `;
 
   /* ───────────────────────────────────────────
@@ -163,6 +149,23 @@
     const footerP = document.getElementById('footer-placeholder');
     if (navP)    { navP.outerHTML    = navbarHTML; initNavbar(); }
     if (footerP) { footerP.outerHTML = footerHTML; }
+    
+    /* Scroll to Top logic */
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    if (scrollBtn) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollBtn.classList.add('show');
+        } else {
+          scrollBtn.classList.remove('show');
+        }
+      }, { passive: true });
+
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
     setActiveLink();
   }
 

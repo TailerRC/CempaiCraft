@@ -222,7 +222,7 @@
               </div>
               <div class="cc-yape-number">
                 <span class="cc-yape-number__label">Número Yape</span>
-                <span class="cc-yape-number__value" id="cc-yape-phone">+51 XXX XXX XXX</span>
+                <span class="cc-yape-number__value" id="cc-yape-phone">+51 921 908 835</span>
                 <button class="cc-yape-copy" id="cc-copy-yape" aria-label="Copiar número">
                   <i class="fa-solid fa-copy"></i>
                 </button>
@@ -297,9 +297,14 @@
             <h3 class="cc-success-title">¡Pedido registrado!</h3>
             <p class="cc-success-text">Tu pedido ha sido guardado. <strong>Las llaves se entregan personalmente</strong> en el horario que indicaste. El staff de CempaiCraft se comunicará contigo.</p>
             <div class="cc-success-detail" id="cc-success-detail"></div>
-            <button class="cc-btn cc-btn--primary" id="btn-close-success">
-              <i class="fa-solid fa-xmark"></i> Cerrar
-            </button>
+            <div style="display:flex; gap:0.5rem; width:100%; max-width:360px; margin-top:1rem;">
+              <button class="cc-btn cc-btn--ghost" id="btn-print-receipt" style="flex:1;">
+                <i class="fa-solid fa-file-arrow-down"></i> Imprimir Boleta
+              </button>
+              <button class="cc-btn cc-btn--primary" id="btn-close-success" style="flex:1;">
+                <i class="fa-solid fa-check"></i> Listo
+              </button>
+            </div>
           </div>
 
         </div><!-- /panel -->
@@ -428,6 +433,9 @@
           descripcion
         };
 
+        /* Guardar pedido actual temporalmente para la boleta */
+        UI.lastOrder = order;
+
         /* Guardar pedido en localStorage */
         Storage.set(ORDER_KEY, order);
         Cart.clear();
@@ -452,6 +460,105 @@
         UI.showView('success');
       });
 
+      /* Imprimir Boleta */
+      document.getElementById('btn-print-receipt').addEventListener('click', () => {
+        if (!UI.lastOrder) return;
+        const o = UI.lastOrder;
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = 400;
+        canvas.height = 500 + (o.items.length * 35);
+        const ctx = canvas.getContext('2d');
+
+        /* Fondo blanco */
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        /* Título */
+        ctx.fillStyle = '#111827';
+        ctx.font = 'bold 28px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('CEMPAICRAFT', 200, 50);
+
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#4B5563';
+        ctx.fillText('Comprobante de Pedido', 200, 75);
+
+        /* Separador */
+        ctx.strokeStyle = '#E5E7EB';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(30, 95); ctx.lineTo(370, 95); ctx.stroke();
+
+        /* Detalles */
+        ctx.textAlign = 'left';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#111827';
+        
+        let y = 125;
+        ctx.fillText('Usuario:', 30, y);
+        ctx.textAlign = 'right';
+        ctx.fillText(o.username, 370, y);
+        
+        y += 30;
+        ctx.textAlign = 'left';
+        ctx.fillText('N° Operación Yape:', 30, y);
+        ctx.textAlign = 'right';
+        ctx.fillText(o.yapeOperation, 370, y);
+
+        y += 30;
+        ctx.textAlign = 'left';
+        const fmtDelivery = new Date(o.deliveryDatetime).toLocaleString('es-PE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+        ctx.fillText('Fecha de entrega:', 30, y);
+        ctx.textAlign = 'right';
+        ctx.fillText(fmtDelivery, 370, y);
+
+        /* Artículos */
+        y += 45;
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 16px Arial';
+        ctx.fillText('Artículos comprados', 30, y);
+
+        y += 15;
+        ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(370, y); ctx.stroke();
+        y += 30;
+
+        ctx.font = '15px Arial';
+        o.items.forEach(item => {
+          ctx.textAlign = 'left';
+          ctx.fillText(`1x ${item.name}`, 30, y);
+          ctx.textAlign = 'right';
+          ctx.fillText(`S/. ${item.price.toFixed(2)}`, 370, y);
+          y += 35;
+        });
+
+        /* Total */
+        y += 10;
+        ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(370, y); ctx.stroke();
+        y += 40;
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText('TOTAL:', 30, y);
+        ctx.textAlign = 'right';
+        ctx.fillText(`S/. ${o.total.toFixed(2)}`, 370, y);
+
+        /* Footer */
+        y += 60;
+        ctx.font = 'italic 13px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#9CA3AF';
+        ctx.fillText('¡Gracias por apoyar a CempaiCraft!', 200, y);
+        
+        const dateStr = new Date(o.createdAt).toLocaleString('es-PE');
+        ctx.fillText(`Generado: ${dateStr}`, 200, y + 25);
+
+        /* Descargar JPG */
+        const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+        const link = document.createElement('a');
+        link.download = `boleta_cempai_${o.username}.jpg`;
+        link.href = dataUrl;
+        link.click();
+      });
+
       /* Cerrar desde success */
       document.getElementById('btn-close-success').addEventListener('click', () => {
         UI.closeCartModal();
@@ -465,40 +572,66 @@
     },
 
     validateCheckout() {
-      const username    = document.getElementById('cf-username').value.trim();
-      const yapeOp      = document.getElementById('cf-yape-op').value.trim();
-      const paymentTime = document.getElementById('cf-payment-time').value;
-      const deliveryDt  = document.getElementById('cf-delivery-dt').value;
+      const inputs = {
+        username: document.getElementById('cf-username'),
+        yapeOp: document.getElementById('cf-yape-op'),
+        paymentTime: document.getElementById('cf-payment-time'),
+        deliveryDt: document.getElementById('cf-delivery-dt')
+      };
 
-      if (!username) {
-        UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> Ingresa tu usuario de Minecraft');
-        document.getElementById('cf-username').focus();
-        return false;
-      }
-      if (!yapeOp || !/^\d{6,12}$/.test(yapeOp)) {
-        UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> Ingresa un número de operación Yape válido');
-        document.getElementById('cf-yape-op').focus();
-        return false;
-      }
-      if (!paymentTime) {
-        UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> Indica la hora en que realizaste el pago');
-        document.getElementById('cf-payment-time').focus();
-        return false;
-      }
-      if (!deliveryDt) {
-        UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> Selecciona una fecha y hora de entrega');
-        document.getElementById('cf-delivery-dt').focus();
-        return false;
+      /* Limpiar errores visuales previos */
+      Object.values(inputs).forEach(el => {
+        if (el) el.classList.remove('is-invalid');
+      });
+
+      let isValid = true;
+      let firstInvalid = null;
+
+      if (!inputs.username.value.trim()) {
+        inputs.username.classList.add('is-invalid');
+        isValid = false;
+        if (!firstInvalid) firstInvalid = inputs.username;
       }
 
-      /* Validar: entrega >= pago + 8h */
-      const minDt = UI.getMinDelivery(paymentTime);
-      if (deliveryDt < minDt) {
-        UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> La entrega debe ser mínimo 8 horas después del pago');
-        document.getElementById('cf-delivery-dt').focus();
-        return false;
+      const yapeVal = inputs.yapeOp.value.trim();
+      if (!yapeVal || !/^\d{6,14}$/.test(yapeVal)) {
+        inputs.yapeOp.classList.add('is-invalid');
+        isValid = false;
+        if (!firstInvalid) firstInvalid = inputs.yapeOp;
       }
-      return true;
+
+      if (!inputs.paymentTime.value) {
+        inputs.paymentTime.classList.add('is-invalid');
+        isValid = false;
+        if (!firstInvalid) firstInvalid = inputs.paymentTime;
+      }
+
+      const deliveryVal = inputs.deliveryDt.value;
+      if (!deliveryVal) {
+        inputs.deliveryDt.classList.add('is-invalid');
+        isValid = false;
+        if (!firstInvalid) firstInvalid = inputs.deliveryDt;
+      } else {
+        const minDt = UI.getMinDelivery(inputs.paymentTime.value);
+        if (deliveryVal < minDt) {
+          inputs.deliveryDt.classList.add('is-invalid');
+          isValid = false;
+          if (!firstInvalid) firstInvalid = inputs.deliveryDt;
+          UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> La entrega debe ser mínimo 8 horas después del pago');
+        }
+      }
+
+      if (!isValid) {
+        if (firstInvalid) {
+          firstInvalid.focus();
+          /* Show a general error message if we didn't just show the 8h specific one */
+          if (firstInvalid !== inputs.deliveryDt || !deliveryVal) {
+             UI.showToast('<i class="fa-solid fa-triangle-exclamation"></i> Por favor, llena todos los campos correctamente');
+          }
+        }
+      }
+
+      return isValid;
     }
   };
 
@@ -822,6 +955,11 @@
         transition: border-color .2s, box-shadow .2s;
       }
       .cc-form-input:focus { border-color: #F5C518; box-shadow: 0 0 0 3px rgba(245,197,24,.15); }
+      .cc-form-input.is-invalid {
+        border-color: #ef4444;
+        background-color: #fef2f2;
+        box-shadow: 0 0 0 3px rgba(239,68,68,.15);
+      }
       .cc-form-hint {
         font-size: .75rem;
         color: #9ca3af;
