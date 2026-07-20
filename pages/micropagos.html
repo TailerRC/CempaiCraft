@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tienda de CempaiCraft. Compra packs de llaves para desbloquear cofres con items y beneficios exclusivos. Pago con Yape." />
+  <title>Tienda | CempaiCraft</title>
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Shop page ─────────────────────────────── */
+    .shop-section { padding: var(--spacing-3xl) 0 var(--spacing-4xl); }
+
+    .packs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-3xl);
+    }
+
+    /* ── Pack card ─────────────────────────────── */
+    .pack-card {
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: all var(--transition-slow);
+      cursor: default;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pack-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity var(--transition-slow);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pack-card--starter::before   { background: radial-gradient(ellipse at top, rgba(245,197,24,0.25), transparent 70%); }
+    .pack-card--bronce::before    { background: radial-gradient(ellipse at top, rgba(205,127,50,0.3), transparent 70%); }
+    .pack-card--plata::before     { background: radial-gradient(ellipse at top, rgba(180,200,220,0.3), transparent 70%); }
+    .pack-card--oro::before       { background: radial-gradient(ellipse at top, rgba(255,215,0,0.35), transparent 70%); }
+    .pack-card--esmeralda::before { background: radial-gradient(ellipse at top, rgba(60,179,113,0.35), transparent 70%); }
+    .pack-card--leyenda::before   { background: radial-gradient(ellipse at top, rgba(168,85,247,0.4), transparent 70%); }
+
+    .pack-card:hover { transform: translateY(-10px) scale(1.02); }
+    .pack-card:hover::before { opacity: 1; }
+
+    .pack-card--starter:hover  { border-color: rgba(245,197,24,0.8);  box-shadow: 0 25px 60px rgba(245,197,24,0.25); }
+    .pack-card--bronce:hover   { border-color: rgba(205,127,50,0.8);  box-shadow: 0 25px 60px rgba(205,127,50,0.3); }
+    .pack-card--plata:hover    { border-color: rgba(180,200,220,0.8); box-shadow: 0 25px 60px rgba(180,200,220,0.25); }
+    .pack-card--oro:hover      { border-color: rgba(255,215,0,0.9);   box-shadow: 0 25px 60px rgba(255,215,0,0.3); }
+    .pack-card--esmeralda:hover{ border-color: rgba(60,179,113,0.9);  box-shadow: 0 25px 60px rgba(60,179,113,0.3); }
+    .pack-card--leyenda:hover  { border-color: rgba(168,85,247,0.9);  box-shadow: 0 25px 60px rgba(168,85,247,0.4); }
+
+    .pack-card--featured { border-color: rgba(255,215,0,0.5); }
+    .pack-card--leyenda  { border-color: rgba(168,85,247,0.4); }
+
+    /* Ribbon */
+    .pack-ribbon {
+      position: absolute;
+      top: 14px; right: -28px;
+      background: linear-gradient(135deg, #F5C518, #FFD93D);
+      color: #111;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 5px 36px;
+      transform: rotate(35deg);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .pack-ribbon--legend { background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; }
+
+    /* Image */
+    .pack-card__image {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .pack-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .pack-card:hover .pack-card__image img { transform: scale(1.06); }
+
+    /* Body */
+    .pack-card__body {
+      padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl);
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pack-card__name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .pack-card__desc {
+      font-size: 0.83rem;
+      color: #94a3b8;
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    /* Footer */
+    .pack-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-sm);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .pack-card__price { display: flex; flex-direction: column; }
+    .pack-card__price-label {
+      font-size: 0.65rem;
+      color: #475569;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 2px;
+    }
+    .pack-card__price-amount {
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .pack-card--starter  .pack-card__price-amount { color: #F5C518; }
+    .pack-card--bronce   .pack-card__price-amount { color: #CD7F32; }
+    .pack-card--plata    .pack-card__price-amount { color: #B4C8DC; }
+    .pack-card--oro      .pack-card__price-amount { color: #FFD700; }
+    .pack-card--esmeralda .pack-card__price-amount { color: #3CB371; }
+    .pack-card--leyenda  .pack-card__price-amount {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Add to cart button */
+    .pack-card__add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.6rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition-spring);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .pack-card--starter  .pack-card__add-btn { background: linear-gradient(135deg,#F5C518,#FFD93D); color:#111; }
+    .pack-card--bronce   .pack-card__add-btn { background: linear-gradient(135deg,#CD7F32,#E8943A); color:#fff; }
+    .pack-card--plata    .pack-card__add-btn { background: linear-gradient(135deg,#94a3b8,#cbd5e1); color:#111; }
+    .pack-card--oro      .pack-card__add-btn { background: linear-gradient(135deg,#FFD700,#F5C518); color:#111; }
+    .pack-card--esmeralda .pack-card__add-btn { background: linear-gradient(135deg,#3CB371,#56D68A); color:#fff; }
+    .pack-card--leyenda  .pack-card__add-btn { background: linear-gradient(135deg,#a855f7,#7c3aed); color:#fff; }
+
+    .pack-card__add-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .pack-card__add-btn:active { transform: scale(0.96); }
+
+    /* ── Info Banner ─────────────────────────── */
+    .shop-info-banner {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: var(--spacing-md);
+      padding: var(--spacing-xl);
+      background: linear-gradient(135deg, rgba(245,197,24,0.06), rgba(60,179,113,0.04));
+      border: 1px solid rgba(245,197,24,0.15);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .shop-info-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+
+    .shop-info-item__icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, rgba(245,197,24,0.12), rgba(60,179,113,0.08));
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      color: var(--color-primary-dark);
+    }
+
+    .shop-info-item__label { font-size: 0.82rem; font-weight: 600; color: var(--color-text-primary); }
+    .shop-info-item__sub   { font-size: 0.72rem; color: var(--color-text-muted); }
+
+    /* ── How it works ─────────────────────────── */
+    .how-section { padding: 0 0 var(--spacing-4xl); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: var(--spacing-lg);
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 28px);
+      right: calc(12.5% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      opacity: 0.25;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--spacing-md);
+    }
+
+    .step-item__icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(245,197,24,0.12), rgba(60,179,113,0.08));
+      border: 2px solid rgba(245,197,24,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      color: var(--color-primary-dark);
+      position: relative;
+      z-index: 1;
+      transition: all var(--transition-spring);
+    }
+
+    .step-item:hover .step-item__icon {
+      background: var(--gradient-primary);
+      border-color: var(--color-primary);
+      color: var(--color-text-primary);
+      transform: scale(1.15);
+      box-shadow: 0 8px 24px rgba(245,197,24,0.35);
+    }
+
+    .step-item h4 { font-size: 0.95rem; font-weight: 700; }
+    .step-item p  { font-size: 0.82rem; color: var(--color-text-secondary); line-height: 1.55; }
+
+    /* ── Yape section ─────────────────────────── */
+    .yape-section {
+      padding-bottom: var(--spacing-4xl);
+      text-align: center;
+    }
+
+    .yape-card {
+      max-width: 500px;
+      margin: var(--spacing-xl) auto 0;
+      background: linear-gradient(135deg, #6C1CCB, #9333EA);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-2xl);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(147,51,234,0.35);
+    }
+
+    .yape-card::before {
+      content: '';
+      position: absolute;
+      top: -30%; right: -10%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .yape-card__icon { font-size: 2.5rem; margin-bottom: var(--spacing-md); display: block; }
+    .yape-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+    .yape-card p  { font-size: 0.88rem; opacity: .8; margin-bottom: var(--spacing-lg); }
+
+    .yape-card__steps {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .yape-card__steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      opacity: .9;
+      line-height: 1.5;
+    }
+
+    .yape-card__steps li i { color: #FFD700; flex-shrink: 0; margin-top: 2px; }
+
+    @media (max-width: 1024px) {
+      .packs-grid { grid-template-columns: repeat(2,1fr); }
+      .shop-info-banner { grid-template-columns: repeat(2,1fr); }
+      .steps-grid { grid-template-columns: repeat(2,1fr); }
+      .steps-grid::before { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .packs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="page-hero__content reveal">
+      <span class="section-tag"><i class="fa-solid fa-store"></i> Tienda Oficial</span>
+      <h1>Packs de <span class="gradient-text">Llaves</span></h1>
+      <p>Abre cofres misteriosos y obtén items exclusivos del servidor. Agrega al carrito y paga con Yape.</p>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- Info Banner -->
+    <div class="shop-info-banner reveal" id="shop-info-banner">
+      <div class="shop-info-item">
+        <div class="shop-info-item__icon"><i class="fa-solid fa-bolt"></i></div>
+        <span class="shop-info-item__label">Entrega Rápida</span>
+        <span class="shop-info-item__sub">Personalmente en el servidor</span>
+      </div>
+      <div class="shop-info-item">
+        <div class="shop-info-item__icon"><i class="fa-solid fa-lock"></i></div>
+        <span class="shop-info-item__label">Pago Seguro</span>
+        <span class="shop-info-item__sub">Solo con Yape</span>
+      </div>
+      <div class="shop-info-item">
+        <div class="shop-info-item__icon"><i class="fa-solid fa-gift"></i></div>
+        <span class="shop-info-item__label">Premios Garantizados</span>
+        <span class="shop-info-item__sub">Cada cofre tiene premio</span>
+      </div>
+      <div class="shop-info-item">
+        <div class="shop-info-item__icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <span class="shop-info-item__label">Soporte Incluido</span>
+        <span class="shop-info-item__sub">Ayuda si algo falla</span>
+      </div>
+    </div>
+
+    <!-- ── PACKS GRID ── -->
+    <section class="shop-section">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fa-solid fa-key"></i> Elige tu Pack</span>
+        <h2>Packs disponibles en <span class="gradient-text">la tienda</span></h2>
+        <p>Cada llave abre un cofre con premios aleatorios. ¡Añade al carrito y paga cuando estés listo!</p>
+      </div>
+
+      <div class="packs-grid stagger" id="packs-container">
+
+        <!-- Pack Starter -->
+        <div class="pack-card pack-card--starter reveal" id="pack-card-starter">
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_starter.png" alt="Pack Starter" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Starter</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 5</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-starter"
+                data-add-to-cart
+                data-pack-id="starter"
+                data-pack-name="Pack Starter"
+                data-pack-price="5"
+                data-pack-image="../assets/img/pack_starter.png"
+                aria-label="Añadir Pack Starter al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Bronce -->
+        <div class="pack-card pack-card--bronce reveal" id="pack-card-bronce">
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_bronce.png" alt="Pack Bronce" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Bronce</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 6</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-bronce"
+                data-add-to-cart
+                data-pack-id="bronce"
+                data-pack-name="Pack Bronce"
+                data-pack-price="6"
+                data-pack-image="../assets/img/pack_bronce.png"
+                aria-label="Añadir Pack Bronce al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Plata -->
+        <div class="pack-card pack-card--plata reveal" id="pack-card-plata">
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_plata.png" alt="Pack Plata" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Plata</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 7</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-plata"
+                data-add-to-cart
+                data-pack-id="plata"
+                data-pack-name="Pack Plata"
+                data-pack-price="7"
+                data-pack-image="../assets/img/pack_plata.png"
+                aria-label="Añadir Pack Plata al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Oro -->
+        <div class="pack-card pack-card--oro pack-card--featured reveal" id="pack-card-oro">
+          <div class="pack-ribbon">
+            <i class="fa-solid fa-fire"></i> Más Vendido
+          </div>
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_oro.png" alt="Pack Oro" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Oro</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 8</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-oro"
+                data-add-to-cart
+                data-pack-id="oro"
+                data-pack-name="Pack Oro"
+                data-pack-price="8"
+                data-pack-image="../assets/img/pack_oro.png"
+                aria-label="Añadir Pack Oro al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Esmeralda -->
+        <div class="pack-card pack-card--esmeralda reveal" id="pack-card-esmeralda">
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_esmeralda.png" alt="Pack Esmeralda" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Esmeralda</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 9</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-esmeralda"
+                data-add-to-cart
+                data-pack-id="esmeralda"
+                data-pack-name="Pack Esmeralda"
+                data-pack-price="9"
+                data-pack-image="../assets/img/pack_esmeralda.png"
+                aria-label="Añadir Pack Esmeralda al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Leyenda -->
+        <div class="pack-card pack-card--leyenda reveal" id="pack-card-leyenda">
+          <div class="pack-ribbon pack-ribbon--legend">
+            <i class="fa-solid fa-star"></i> Mejor Valor
+          </div>
+          <div class="pack-card__image">
+            <img src="../assets/img/pack_leyenda.png" alt="Pack Leyenda" loading="lazy" />
+          </div>
+          <div class="pack-card__body">
+            <div class="pack-card__name">Pack Leyenda</div>
+            <p class="pack-card__desc">Descripción pendiente.</p>
+            <div class="pack-card__footer">
+              <div class="pack-card__price">
+                <span class="pack-card__price-label">Precio</span>
+                <span class="pack-card__price-amount">S/. 10</span>
+              </div>
+              <button class="pack-card__add-btn"
+                id="btn-add-leyenda"
+                data-add-to-cart
+                data-pack-id="leyenda"
+                data-pack-name="Pack Leyenda"
+                data-pack-price="10"
+                data-pack-image="../assets/img/pack_leyenda.png"
+                aria-label="Añadir Pack Leyenda al carrito">
+                <i class="fa-solid fa-cart-plus"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Cómo funciona ── -->
+    <section class="how-section">
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fa-solid fa-circle-question"></i> ¿Cómo funciona?</span>
+        <h2>Obtén tus llaves en <span class="gradient-text">4 pasos</span></h2>
+      </div>
+      <div class="steps-grid stagger" id="steps-container">
+        <div class="step-item reveal">
+          <div class="step-item__icon"><i class="fa-solid fa-cart-plus"></i></div>
+          <h4>Elige tu Pack</h4>
+          <p>Selecciona el pack que quieras y haz click en "Añadir". Puedes agregar varios antes de pagar.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-item__icon"><i class="fa-solid fa-cart-shopping"></i></div>
+          <h4>Revisa tu carrito</h4>
+          <p>Haz click en el ícono del carrito en la navbar para ver tus packs y proceder al pago.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-item__icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+          <h4>Paga con Yape</h4>
+          <p>Envía el monto exacto al número Yape de CempaiCraft y completa el formulario de confirmación.</p>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-item__icon"><i class="fa-solid fa-key"></i></div>
+          <h4>Recibe tus llaves</h4>
+          <p>El staff te entregará personalmente tus llaves en el servidor en la fecha y hora que indicaste.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pago con Yape ── -->
+    <section class="yape-section reveal">
+      <span class="section-tag"><i class="fa-solid fa-mobile-screen-button"></i> Método de pago</span>
+      <h2 style="margin: var(--spacing-md) 0;">Solo aceptamos <span class="gradient-text">Yape</span></h2>
+      <p style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto;">
+        Para garantizar la trazabilidad de cada compra, el único método de pago habilitado es Yape.
+      </p>
+      <div class="yape-card">
+        <i class="fa-solid fa-mobile-screen-button yape-card__icon"></i>
+        <h3>¿Cómo pagar con Yape?</h3>
+        <p>Sigue estos pasos después de agregar tus packs al carrito:</p>
+        <ul class="yape-card__steps">
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            Haz click en el carrito <i class="fa-solid fa-cart-shopping" style="font-size:.8em;opacity:.8;"></i> en la parte superior.
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            Haz click en "Proceder con Yape" y copia el número que aparece.
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            Abre Yape, busca el número y envía el monto exacto.
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            Anota el número de operación que te da Yape y completa el formulario.
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            Confirma la fecha y hora en que deseas recibir tus llaves (mínimo 8 horas después del pago).
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/components.js"></script>
+  <script src="../assets/js/animations.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

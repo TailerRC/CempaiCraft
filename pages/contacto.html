@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contacta al equipo de CempaiCraft. Abre un ticket en Discord para soporte técnico, reportes o dudas del servidor Survival." />
+  <title>Contacto | CempaiCraft</title>
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Contact page styles ── */
+    .contact-section {
+      padding: var(--spacing-3xl) 0 var(--spacing-4xl);
+    }
+
+    /* Discord CTA Banner */
+    .discord-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-xl);
+      padding: var(--spacing-2xl) var(--spacing-3xl);
+      background: linear-gradient(135deg, #5865F2 0%, #404EED 100%);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--spacing-2xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .discord-banner::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -5%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .discord-banner__left {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .discord-banner__icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #fff;
+      flex-shrink: 0;
+      backdrop-filter: blur(4px);
+    }
+
+    .discord-banner__text h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .discord-banner__text p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      margin: 0;
+    }
+
+    .discord-banner__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: #fff;
+      color: #5865F2;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all var(--transition-spring);
+      white-space: nowrap;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .discord-banner__btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    /* Contact cards grid */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+      padding: var(--spacing-xl);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      transition: all var(--transition-slow);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(245,197,24,0.35);
+    }
+
+    .contact-card--discord:hover  { border-color: rgba(88,101,242,0.4);  box-shadow: 0 8px 30px rgba(88,101,242,0.12); }
+    .contact-card--instagram:hover { border-color: rgba(225,48,108,0.4); box-shadow: 0 8px 30px rgba(225,48,108,0.12); }
+
+    .contact-card__icon {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      transition: transform var(--transition-spring);
+    }
+
+    .contact-card:hover .contact-card__icon { transform: scale(1.12) rotate(-5deg); }
+
+    .contact-card--discord   .contact-card__icon { background: rgba(88,101,242,0.12);  color: #5865F2; }
+    .contact-card--instagram .contact-card__icon { background: rgba(225,48,108,0.12); color: #E1306C; }
+    .contact-card--web       .contact-card__icon { background: rgba(245,197,24,0.12);  color: var(--color-primary-dark); }
+    .contact-card--server    .contact-card__icon { background: rgba(60,179,113,0.12);  color: var(--color-secondary-dark); }
+
+    .contact-card__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .contact-card__value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      word-break: break-all;
+    }
+
+    .contact-card__sub {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Schedule */
+    .schedule-card {
+      background: linear-gradient(135deg, rgba(245,197,24,0.06), rgba(60,179,113,0.04));
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-2xl);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .schedule-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .schedule-card__header-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--color-text-primary);
+      flex-shrink: 0;
+    }
+
+    .schedule-card__header h3 { font-size: 1.1rem; margin: 0; }
+    .schedule-card__header p  { font-size: 0.82rem; color: var(--color-text-muted); margin: 2px 0 0; }
+
+    .schedule-rows {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .schedule-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+    }
+
+    .schedule-row__day {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+
+    .schedule-row__day i { color: var(--color-primary-dark); width: 16px; text-align: center; }
+
+    .schedule-row__time {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      font-family: var(--font-mono);
+    }
+
+    /* FAQ section */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+    }
+
+    @media (max-width: 768px) {
+      .discord-banner { flex-direction: column; text-align: center; padding: var(--spacing-xl); }
+      .discord-banner__left { flex-direction: column; }
+      .contact-cards { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="page-hero__content reveal">
+      <span class="section-tag"><i class="fa-solid fa-headset"></i> Soporte</span>
+      <h1>¿Necesitas <span class="gradient-text">ayuda?</span></h1>
+      <p>Para soporte, reportes o dudas, abre un ticket en nuestro servidor de Discord. El equipo de staff te atenderá en el horario disponible.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="contact-section">
+
+      <!-- Discord Banner -->
+      <div class="discord-banner reveal" id="discord-banner">
+        <div class="discord-banner__left">
+          <div class="discord-banner__icon">
+            <i class="fa-brands fa-discord"></i>
+          </div>
+          <div class="discord-banner__text">
+            <h3>Abre un ticket en Discord</h3>
+            <p>El canal de soporte es el lugar correcto para reportes, problemas técnicos y dudas. No respondemos por DM.</p>
+          </div>
+        </div>
+        <a href="https://discord.gg/mU7axZHUDZ" class="discord-banner__btn" id="btn-open-discord" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-discord"></i> Unirse al Discord
+        </a>
+      </div>
+
+      <!-- Contact Cards -->
+      <div class="contact-cards stagger" id="contact-cards">
+
+        <a href="https://discord.gg/mU7axZHUDZ" class="contact-card contact-card--discord reveal" id="card-discord" target="_blank" rel="noopener noreferrer">
+          <div class="contact-card__icon">
+            <i class="fa-brands fa-discord"></i>
+          </div>
+          <div>
+            <div class="contact-card__label">Discord</div>
+            <div class="contact-card__value">discord.gg/cempaicraft</div>
+            <div class="contact-card__sub">Soporte por tickets</div>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/cempai_urp/" class="contact-card contact-card--instagram reveal" id="card-instagram" target="_blank" rel="noopener noreferrer">
+          <div class="contact-card__icon">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <div>
+            <div class="contact-card__label">Instagram</div>
+            <div class="contact-card__value">@cempaicraft</div>
+            <div class="contact-card__sub">Noticias y actualizaciones</div>
+          </div>
+        </a>
+
+        <a href="https://cempaicraft.olimpo.host" class="contact-card contact-card--web reveal" id="card-web" target="_blank" rel="noopener noreferrer">
+          <div class="contact-card__icon">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <div>
+            <div class="contact-card__label">Página Oficial</div>
+            <div class="contact-card__value">cempaicraft.olimpo.host</div>
+            <div class="contact-card__sub">Sitio oficial del servidor</div>
+          </div>
+        </a>
+
+        <div class="contact-card contact-card--server reveal" id="card-server" style="cursor:default;">
+          <div class="contact-card__icon">
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <div>
+            <div class="contact-card__label">IP del Servidor</div>
+            <div class="contact-card__value">cempaicraft.olimpo.host</div>
+            <div class="contact-card__sub">Minecraft Java 26.1.2 · Survival</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Horario de Soporte -->
+      <div class="schedule-card reveal" id="schedule-section">
+        <div class="schedule-card__header">
+          <div class="schedule-card__header-icon">
+            <i class="fa-regular fa-clock"></i>
+          </div>
+          <div>
+            <h3>Horario de Soporte</h3>
+            <p>Fuera de este horario puedes dejar tu ticket y se atenderá al siguiente día hábil.</p>
+          </div>
+        </div>
+        <div class="schedule-rows">
+          <div class="schedule-row">
+            <span class="schedule-row__day">
+              <i class="fa-solid fa-calendar-week"></i> Lunes – Viernes
+            </span>
+            <span class="schedule-row__time">6:00 p.m. – 10:00 p.m.</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-row__day">
+              <i class="fa-solid fa-calendar-day"></i> Sábado
+            </span>
+            <span class="schedule-row__time">10:00 a.m. – 10:00 p.m.</span>
+          </div>
+          <div class="schedule-row">
+            <span class="schedule-row__day">
+              <i class="fa-solid fa-calendar-day"></i> Domingo
+            </span>
+            <span class="schedule-row__time">3:00 p.m. – 10:00 p.m.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="section-header reveal">
+        <span class="section-tag"><i class="fa-solid fa-circle-question"></i> Preguntas frecuentes</span>
+        <h2>Problemas <span class="gradient-text">comunes</span></h2>
+        <p>Revisa si tu consulta ya tiene respuesta antes de abrir un ticket.</p>
+      </div>
+
+      <div class="faq-grid" id="faq-grid">
+        <div class="feature-card reveal" style="--delay:0.1s">
+          <div class="feature-card__icon"><i class="fa-solid fa-server"></i></div>
+          <h3>¿Cómo me uno al servidor?</h3>
+          <p>Abre Minecraft Java Edition 26.1.2, ve a Multijugador y agrega la IP <strong>cempaicraft.olimpo.host</strong>. El modo es Survival.</p>
+        </div>
+        <div class="feature-card reveal" style="--delay:0.2s">
+          <div class="feature-card__icon"><i class="fa-solid fa-key"></i></div>
+          <h3>No recibí mis llaves</h3>
+          <p>Si realizaste el pago y no recibiste tus llaves en el tiempo acordado, abre un ticket en Discord adjuntando tu número de operación Yape.</p>
+        </div>
+        <div class="feature-card reveal" style="--delay:0.3s">
+          <div class="feature-card__icon"><i class="fa-solid fa-ban"></i></div>
+          <h3>Me sancionaron y creo que fue error</h3>
+          <p>Abre un ticket en Discord con el asunto "Apelación de sanción" explicando el caso. Lo revisamos en un plazo de 48 horas.</p>
+        </div>
+        <div class="feature-card reveal" style="--delay:0.4s">
+          <div class="feature-card__icon"><i class="fa-solid fa-bug"></i></div>
+          <h3>Encontré un bug en el servidor</h3>
+          <p>Repórtalo abriendo un ticket en Discord con el asunto "Bug Report" y describiendo cómo reproducirlo. No lo explotes.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/components.js"></script>
+  <script src="../assets/js/animations.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

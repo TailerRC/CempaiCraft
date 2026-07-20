@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CempaiCraft - Servidor Survival de Minecraft. Únete a nuestra comunidad, aprende comandos, obtén packs de llaves y vive la experiencia." />
+  <title>CempaiCraft | Inicio</title>
+  <link rel="stylesheet" href="assets/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero__bg-grid"></div>
+    <div class="hero__particles" id="particles"></div>
+
+    <div class="hero__content reveal">
+      <div class="hero__badge">
+        <span class="badge__dot"></span>
+        Servidor Online
+      </div>
+      <h1 class="hero__title">
+        Bienvenido a<br/>
+        <span class="gradient-text">CempaiCraft</span>
+      </h1>
+      <p class="hero__subtitle">
+        El servidor Survival de Minecraft donde cada bloque cuenta. Únete a nuestra comunidad,
+        obtén llaves exclusivas y empieza a construir tu historia.
+      </p>
+      <div class="hero__actions">
+        <a href="pages/micropagos.html" class="btn btn--primary" id="hero-shop-btn">
+          <i class="fa-solid fa-key"></i> Ver Tienda
+        </a>
+        <a href="pages/tutorial.html" class="btn btn--outline" id="hero-tutorial-btn">
+          <i class="fa-solid fa-book"></i> Tutoriales
+        </a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__number" data-target="10">0</span>
+          <span class="stat__label">Jugadores/día</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__number" data-target="35">0</span>
+          <span class="stat__label">Cap. máxima</span>
+        </div>
+        <div class="stat__divider"></div>
+        <div class="stat">
+          <span class="stat__number" data-target="98">0</span>
+          <span class="stat__label">% Uptime</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal card -->
+    <div class="hero__visual reveal reveal--right">
+      <div class="hero__card-container">
+        <div class="minecraft-card">
+          <div class="minecraft-card__header">
+            <div class="mc-dot mc-dot--red"></div>
+            <div class="mc-dot mc-dot--yellow"></div>
+            <div class="mc-dot mc-dot--green"></div>
+            <span>CempaiCraft Server</span>
+          </div>
+          <div class="minecraft-card__body">
+            <div class="mc-line">
+              <span class="mc-prompt">$</span>
+              <span class="mc-text typing">cempaicraft.olimpo.host</span>
+            </div>
+            <div class="mc-line mc-line--info">
+              <span class="mc-label">Estado:</span>
+              <span class="mc-status"><i class="fa-solid fa-circle" style="color:#28C840;font-size:.6rem;"></i> Online</span>
+            </div>
+            <div class="mc-line mc-line--info">
+              <span class="mc-label">Versión:</span>
+              <span class="mc-value">26.1.2</span>
+            </div>
+            <div class="mc-line mc-line--info">
+              <span class="mc-label">Modo:</span>
+              <span class="mc-value">Survival</span>
+            </div>
+            <div class="mc-line mc-line--info">
+              <span class="mc-label">Jugadores:</span>
+              <span class="mc-value">8/35</span>
+            </div>
+            <div class="mc-line mc-line--info">
+              <span class="mc-label">Ping:</span>
+              <span class="mc-value mc-value--green" id="ping-display">104ms</span>
+            </div>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="floating-badge floating-badge--1">
+          <i class="fa-solid fa-pickaxe"></i> Survival
+        </div>
+        <div class="floating-badge floating-badge--2">
+          <i class="fa-solid fa-key"></i> Llaves
+        </div>
+        <div class="floating-badge floating-badge--3">
+          <i class="fa-solid fa-trophy"></i> Cofres
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">¿Por qué elegirnos?</span>
+        <h2>Todo lo que necesitas en <span class="gradient-text">un solo servidor</span></h2>
+        <p>Disfruta de una experiencia completa de Minecraft Survival con nuestra comunidad activa.</p>
+      </div>
+
+      <div class="features__grid">
+        <!-- Card 1 -->
+        <div class="feature-card reveal" style="--delay:0.1s">
+          <div class="feature-card__icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3>Alto Rendimiento</h3>
+          <p>Servidores con hardware de última generación para una experiencia sin lag ni interrupciones.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card reveal" style="--delay:0.2s">
+          <div class="feature-card__icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3>Comunidad Activa</h3>
+          <p>Jugadores activos listos para aventurarse contigo en el mundo Survival cada día.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card reveal" style="--delay:0.3s">
+          <div class="feature-card__icon">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3>Soporte Disponible</h3>
+          <p>Equipo de staff dedicado para ayudarte con cualquier problema técnico en el servidor.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card reveal" style="--delay:0.4s">
+          <div class="feature-card__icon">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+          <h3>Economía Balanceada</h3>
+          <p>Sistema económico justo que recompensa tu dedicación y habilidad en el Survival.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <div class="container">
+      <div class="cta__inner reveal">
+        <div class="cta__text">
+          <h2>¿Listo para comenzar tu aventura?</h2>
+          <p>Únete y empieza a construir tu legado en CempaiCraft. Obtén tus primeras llaves hoy.</p>
+        </div>
+        <div class="cta__actions">
+          <a href="pages/micropagos.html" class="btn btn--primary" id="cta-shop-btn">
+            <i class="fa-solid fa-key"></i> Ver Tienda
+          </a>
+          <a href="pages/contacto.html" class="btn btn--ghost" id="cta-contact-btn">
+            <i class="fa-brands fa-discord"></i> Discord
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    /* ── Ping oscillation 100-110ms ── */
+    (function () {
+      const el = document.getElementById('ping-display');
+      if (!el) return;
+      setInterval(() => {
+        const ping = Math.floor(Math.random() * 11) + 100;
+        el.textContent = ping + 'ms';
+      }, 3000);
+    })();
+  </script>
+</body>
+</html>
