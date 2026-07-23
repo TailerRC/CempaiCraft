@@ -168,14 +168,14 @@
         <div class="command-category__header" id="cat-clanes-header" aria-controls="cat-clanes-body" role="button" tabindex="0">
           <div class="command-category__icon"><i class="fa-solid fa-shield-halved"></i></div>
           <h3>4. Clanes</h3>
-          <span class="command-category__count">19 comandos</span>
+          <span class="command-category__count">16 comandos</span>
           <button class="command-category__toggle" id="toggle-clanes" aria-label="Expandir Clanes">
             <i class="fa-solid fa-chevron-down"></i>
           </button>
         </div>
         <div class="command-category__body" id="cat-clanes-body">
           <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
-            Sistema de clanes, puntos y protección de cofres. Los puntos se ganan matando jugadores (+5 normales, +10 clanes enemigos).
+            Sistema de clanes y protección de cofres.
           </p>
           <div class="command-list">
             <div class="command-item">
@@ -213,20 +213,7 @@
               </div>
               <button class="command-item__copy">Copiar</button>
             </div>
-            <div class="command-item">
-              <div>
-                <div class="command-item__code">/clan points</div>
-                <div class="command-item__desc">Ver puntos totales del clan.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
-            <div class="command-item">
-              <div>
-                <div class="command-item__code">/clan playerpoints</div>
-                <div class="command-item__desc">Ver cuánto aportó cada miembro.</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
+
             <div class="command-item">
               <div>
                 <div class="command-item__code">/clan invite &lt;jugador&gt;</div>
@@ -283,13 +270,7 @@
               </div>
               <button class="command-item__copy">Copiar</button>
             </div>
-            <div class="command-item">
-              <div>
-                <div class="command-item__code">/clanchest buylock 1</div>
-                <div class="command-item__desc">Compra 1 cupo de protección de cofre (cuesta 250 puntos de clan).</div>
-              </div>
-              <button class="command-item__copy">Copiar</button>
-            </div>
+
             <div class="command-item">
               <div>
                 <div class="command-item__code">/clanchest lock</div>
@@ -315,11 +296,79 @@
         </div>
       </div>
 
+      <!-- CATEGORÍA: Casa de Subastas -->
+      <div class="command-category reveal">
+        <div class="command-category__header" id="cat-ah-header" aria-controls="cat-ah-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-gavel"></i></div>
+          <h3>5. Casa de Subastas</h3>
+          <span class="command-category__count">7 comandos</span>
+          <button class="command-category__toggle" id="toggle-ah" aria-label="Expandir Casa de Subastas">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="command-category__body" id="cat-ah-body">
+          <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
+            Con este sistema puedes vender tus propios objetos a otros jugadores y comprar lo que otros están vendiendo, todo desde un panel general. Límite de publicaciones, no hay reembolsos y duran 2 días en venta.
+          </p>
+          <div class="command-list">
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah</div>
+                <div class="command-item__desc">Abrir el panel general de subastas (también funciona /auction y /ah search &lt;nombre&gt; para buscar).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah sell &lt;precio&gt; [cantidad]</div>
+                <div class="command-item__desc">Vender el objeto en mano (ej: /ah sell 1000). Usa 1K, 1M para simplificar ceros (ej: 5K = 5000).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah selling</div>
+                <div class="command-item__desc">Ver los objetos que tienes puestos en venta ahora mismo.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah expired</div>
+                <div class="command-item__desc">Recuperar los objetos que no se vendieron a tiempo (duran 2 días).</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah purchased</div>
+                <div class="command-item__desc">Recuperar objetos que compraste y no te llegaron directo al inventario.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah claim</div>
+                <div class="command-item__desc">Reclamar dinero de ventas si estabas desconectado y no te llegó automático.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/ah history</div>
+                <div class="command-item__desc">Ver tu historial de ventas.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- CATEGORÍA: Quests -->
       <div class="command-category reveal">
         <div class="command-category__header" id="cat-quests-header" aria-controls="cat-quests-body" role="button" tabindex="0">
           <div class="command-category__icon"><i class="fa-solid fa-scroll"></i></div>
-          <h3>5. Quests</h3>
+          <h3>6. Quests</h3>
           <span class="command-category__count">1 comando</span>
           <button class="command-category__toggle" id="toggle-quests" aria-label="Expandir Quests">
             <i class="fa-solid fa-chevron-down"></i>
@@ -333,6 +382,53 @@
                 <div class="command-item__desc">Aceptar o gestionar tus misiones (quests).</div>
               </div>
               <button class="command-item__copy" aria-label="Copiar comando">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA: Tiendas -->
+      <div class="command-category reveal">
+        <div class="command-category__header" id="cat-tiendas-header" aria-controls="cat-tiendas-body" role="button" tabindex="0">
+          <div class="command-category__icon"><i class="fa-solid fa-store"></i></div>
+          <h3>7. Sistema de Tiendas (Tradeo)</h3>
+          <span class="command-category__count">4 comandos</span>
+          <button class="command-category__toggle" id="toggle-tiendas" aria-label="Expandir Tiendas">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="command-category__body" id="cat-tiendas-body">
+          <p style="padding: 0 var(--spacing-xl) var(--spacing-md); color: var(--color-text-muted); font-size: 0.9rem;">
+            Las tiendas son intercambio de items, no se usa dinero. El bloque de tienda es el <b>barril</b>. Para configurar: haz clic en el barril, arrastra lo que vendes a la izquierda, lo que pides a la derecha y haz clic en el tinte verde. Para borrar un trade haz clic en la TNT. <b>⚠️ Límite: máximo 3 tiendas por jugador.</b>
+          </p>
+          <div class="command-list">
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/shop create</div>
+                <div class="command-item__desc">Coloca un barril, míralo y usa este comando para crear tu tienda.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/shop stock</div>
+                <div class="command-item__desc">Abre tu inventario de stock para meter los items que vendes.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/shop delete</div>
+                <div class="command-item__desc">Mira a tu barril de tienda y usa este comando para borrarla.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
+            </div>
+            <div class="command-item">
+              <div>
+                <div class="command-item__code">/shop shops</div>
+                <div class="command-item__desc">Ver la lista con todas las tiendas del servidor.</div>
+              </div>
+              <button class="command-item__copy">Copiar</button>
             </div>
           </div>
         </div>
